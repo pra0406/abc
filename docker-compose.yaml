@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  app1:
+    image: node:14       # Replace with your app's image or build configuration
+    container_name: app1
+    working_dir: /app
+    volumes:
+      - ./app1:/app       # Bind mount the app's directory
+    ports:
+      - "3000:3000"       # Expose port 3000 (adjust based on your app's needs)
+    networks:
+      - app_network
+    environment:
+      - NODE_ENV=production
+
+  app2:
+    image: mysql:5.7       # Example: MySQL database
+    container_name: app2
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"        # Expose port 3306 for MySQL access
+    networks:
+      - app_network
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app3:
+    image: python:3.9       # Example: Python worker service
+    container_name: app3
+    working_dir: /worker
+    volumes:
+      - ./worker:/worker    # Bind mount the worker's directory
+    networks:
+      - app_network
+    command: python worker.py  # Replace with the actual worker command
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  db_data:
+version: '3.8'
+
+services:
+  app1:
+    image: node:14       # Replace with your app's image or build configuration
+    container_name: app1
+    working_dir: /app
+    volumes:
+      - ./app1:/app       # Bind mount the app's directory
+    ports:
+      - "3000:3000"       # Expose port 3000 (adjust based on your app's needs)
+    networks:
+      - app_network
+    environment:
+      - NODE_ENV=production
+
+  app2:
+    image: mysql:5.7       # Example: MySQL database
+    container_name: app2
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"        # Expose port 3306 for MySQL access
+    networks:
+      - app_network
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app3:
+    image: python:3.9       # Example: Python worker service
+    container_name: app3
+    working_dir: /worker
+    volumes:
+      - ./worker:/worker    # Bind mount the worker's directory
+    networks:
+      - app_network
+    command: python worker.py  # Replace with the actual worker command
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  db_data:
